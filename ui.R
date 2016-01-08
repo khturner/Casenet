@@ -1,20 +1,21 @@
 require(shiny)
 
 shinyUI(fluidPage(
+  tags$head(
+    tags$style(HTML("
+      @import url('https://www.courts.mo.gov/casenet/styles/casenet.css');
+    "))
+  ),
   titlePanel("Collate Case.net charges, judgements, and sentences"),
-  sidebarLayout(
-    sidebarPanel(
-      h3("Input case numbers:"),
+  tabsetPanel(
+    tabPanel("Input case numbers",
       tags$textarea(id="case_numbers", rows=10, cols=25),
-      submitButton("Submit!"),
+      hr(),
       "Contact Keith Turner", a("(khturner@gmail.com)", href="mailto:khturner@gmail.com"),
-      "with questions, comments, or to report bugs",
-      width = 3
+      "with questions, comments, or to report bugs"
     ),
-    mainPanel(
-      dataTableOutput("results"),
-      downloadButton("download", "Download"),
-      width = 9
+    tabPanel("Charges, judgements, sentences",
+      htmlOutput("results")
     )
   )
 ))

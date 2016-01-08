@@ -1,9 +1,11 @@
+# This file is for messing around with stuff
+
 require(RCurl)
 require(httr)
 require(rvest)
 set_config( config( ssl_verifypeer = 0L ) )
 
-case_number <- "16SL-CR00033"
+case_number <- "10SL-CR09964-0butt"
 
 # Get search results
 search_url <- "https://www.courts.mo.gov/casenet/cases/caseFileSearch.do"
@@ -60,3 +62,8 @@ agencies <- charges_resp %>% read_html() %>% html_nodes(xpath = xpath) %>% html_
 result <- data.frame(case_number = case_number, case_style = case_style,
                      description = descriptions, date = dates, code = codes,
                      ocn = ocns, agency = agencies, stringsAsFactors = F) %>% tbl_df
+
+# Can I just grab the whole thing
+xpath <- "/html/body/table/tr[2]/td/table/tr[2]"
+charges_resp %>% read_html() %>% html_nodes(xpath = xpath)
+
